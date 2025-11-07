@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Onboarding from "./pages/Onboarding";
+import Dashboard from "./pages/Dashboard";
+import Inbox from "./pages/Inbox";
+import ChatThread from "./pages/ChatThread";
+import VideoRoom from "./pages/VideoRoom";
+import WhiteboardRoom from "./pages/WhiteboardRoom";
+import { useAuth } from "./context/AuthContext";
 
-function App() {
-  const [count, setCount] = useState(0)
+const Private = ({ children }) => {
+  const { user, loading } = useAuth();
+  if (loading) return <div className="p-8">Loading...</div>;
+  return user ? children : <Navigate to="/login" replace />;
+};
 
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login/>} />
+        <Route path="/signup" element={<Signup/>} />
 
-export default App
+        <Route path="/" element={<Private><Dashboard/></Private>} />
+        <Route path="/onboarding" element={<Private><Onboarding/></Private>} />
+        <Route path="/inbox" element={<Private><Inbox/></Private>} />
+        <Route path="/chat/:id" element={<Private><ChatThread/></Private>} />
+        <Route path="/video/:id" element={<Private><VideoRoom/></Private>} />
+        <Route path="/whiteboard/:id" element={<Private><WhiteboardRoom/></Private>} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
