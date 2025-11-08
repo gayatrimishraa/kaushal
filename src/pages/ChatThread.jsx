@@ -71,9 +71,6 @@ export default function ChatThread() {
 
         <div className="flex gap-2">
           <Button onClick={() => navigate(`/video/${chatId}`)}>🎥 Video</Button>
-          <Button onClick={() => navigate(`/whiteboard/${chatId}`)}>
-            🧑‍🏫 Whiteboard
-          </Button>
           <Button onClick={() => setShowRating(true)}>⭐ Rate</Button>
         </div>
       </div>

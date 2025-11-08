@@ -6,7 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Inbox from "./pages/Inbox";
 import ChatThread from "./pages/ChatThread";
 import VideoRoom from "./pages/VideoRoom";
-import WhiteboardRoom from "./pages/WhiteboardRoom";
+
 import { useAuth } from "./context/AuthContext";
 
 const Private = ({ children }) => {
@@ -27,7 +27,7 @@ export default function App() {
         <Route path="/inbox" element={<Private><Inbox/></Private>} />
         <Route path="/chat/:id" element={<Private><ChatThread/></Private>} />
         <Route path="/video/:id" element={<Private><VideoRoom/></Private>} />
-        <Route path="/whiteboard/:id" element={<Private><WhiteboardRoom/></Private>} />
+        
       </Routes>
     </BrowserRouter>
   );
